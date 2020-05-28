@@ -38,7 +38,7 @@ namespace FuelRed.Web.Helpers
                 Id = isNew ? 0 : model.Id,
                 Description = model.Description,
                 Price = model.Price,
-                ImagePath = model.ImagePath,
+                ImagePath = path,
                 Station = model.Station
 
             };

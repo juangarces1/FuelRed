@@ -125,7 +125,7 @@ namespace FuelRed.Web.Controllers
 
                 if (productViewModel.ImageFile != null)
                 {
-                    path = await _imageHelper.UploadImageAsync(productViewModel.ImageFile, "Stations");
+                    path = await _imageHelper.UploadImageAsync(productViewModel.ImageFile, "Products");
                 }
 
                 ProductEntity productEntity = _converterHelper.ToProductEntity(productViewModel, path, false);
