@@ -14,4 +14,10 @@
     <ProjectReference Include="..\FuelRed.Common\FuelRed.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\Employees\" />
+    <Folder Include="wwwroot\images\Products\" />
+    <Folder Include="wwwroot\images\Stations\" />
+  </ItemGroup>
+
 </Project>

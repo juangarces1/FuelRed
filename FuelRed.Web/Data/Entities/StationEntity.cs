@@ -22,10 +22,10 @@ namespace FuelRed.Web.Data.Entities
         [Required(ErrorMessage = "The {0} field is mandatory ")]
         public string LegalCertificate { get; set; }
 
-
+        [Display(Name = "Logo")]
         public string LogoPath { get; set; }
 
-        public  ICollection<ProductEntity> Products { get; set; }
+        public ICollection<ProductEntity> Products { get; set; }
 
         public ICollection<EmployeeEntity> Employees { get; set; }
 

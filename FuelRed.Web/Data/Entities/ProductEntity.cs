@@ -18,6 +18,9 @@ namespace FuelRed.Web.Data.Entities
         [Required(ErrorMessage = "the {0} field is mandatory")]
         public decimal Price { get; set; }
 
+        [Display (Name = "Image")]
+        public string ImagePath { get; set; }
+
 
         public StationEntity Station { get; set; }
     }
