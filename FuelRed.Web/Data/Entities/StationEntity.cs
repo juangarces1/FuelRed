@@ -30,6 +30,8 @@ namespace FuelRed.Web.Data.Entities
         public ICollection<EmployeeEntity> Employees { get; set; }
 
         public ICollection<TransactionEntity> Transactions { get; set; }
+
+        public ICollection<UserEntity> Users { get; set; }
     }
 
 }

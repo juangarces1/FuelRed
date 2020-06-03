@@ -3,7 +3,7 @@ using FuelRed.Web.Helpers;
 using FuelRed.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Soccer.Web.Data;
+using FuelRed.Web.Data;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,21 +16,29 @@ namespace FuelRed.Web.Controllers
         private readonly DataContext _context;
         private readonly IImageHelper _imageHelper;
         private readonly IConverterHelper _converterHelper;
+        private readonly IProductsHelper _productsHelper;
+        private readonly IUserHelper _userHelper;
 
         public ProductsController(
             DataContext context,
             IImageHelper imageHelper,
-            IConverterHelper converterHelper)
+            IConverterHelper converterHelper,
+            IProductsHelper productsHelper,
+            IUserHelper userHelper)
         {
             _context = context;
             _imageHelper = imageHelper;
             _converterHelper = converterHelper;
+            _productsHelper = productsHelper;
+            _userHelper = userHelper;
         }
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.ToListAsync());
+            var model = await _productsHelper.GetProductsAsync(this.User.Identity.Name);
+
+            return View(model);
         }
 
         // GET: Products/Details/5
@@ -74,6 +82,9 @@ namespace FuelRed.Web.Controllers
                 }
 
                 ProductEntity productEntity = _converterHelper.ToProductEntity(productViewModel, path, true);
+                var user = await _userHelper.GetUserAsync(User.Identity.Name);
+                productEntity.Station = user.Station;
+                
                 _context.Add(productEntity);
 
                 try

@@ -3,7 +3,7 @@ using FuelRed.Web.Helpers;
 using FuelRed.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Soccer.Web.Data;
+using FuelRed.Web.Data;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

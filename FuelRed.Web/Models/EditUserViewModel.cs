@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
-using FuelRed.Common.Enums;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace FuelRed.Web.Data.Entities
+namespace FuelRed.Web.Models
 {
-    public class UserEntity : IdentityUser
+    public class EditUserViewModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "Document")]
         [MaxLength(20, ErrorMessage = "The {0} field can not have more than {1} characters.")]
         [Required(ErrorMessage = "The field {0} is mandatory.")]
@@ -25,18 +27,22 @@ namespace FuelRed.Web.Data.Entities
         [MaxLength(100, ErrorMessage = "The {0} field can not have more than {1} characters.")]
         public string Address { get; set; }
 
+        [Display(Name = "Phone Number")]
+        [MaxLength(50, ErrorMessage = "The {0} field can not have more than {1} characters.")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Picture")]
+        public IFormFile PictureFile { get; set; }
+
         [Display(Name = "Picture")]
         public string PicturePath { get; set; }
 
-        [Display(Name = "User Type")]
-        public UserType UserType { get; set; }
+        [Required(ErrorMessage = "The field {0} is mandatory.")]
+        [Display(Name = "Station")]
+        [Range(1, int.MaxValue, ErrorMessage = "You must select a Station.")]
+        public int StationId { get; set; }
 
-        public  ICollection<PaymentEntity> Payments { get; set; }        
-
-        public StationEntity Station { get; set; }
-
-        public string FullName => $"{FirstName} {LastName}";
-
-        public string FullNameWithDocument => $"{FirstName} {LastName} - {Document}";
+        public IEnumerable<SelectListItem> Stations { get; set; }
     }
 }
+

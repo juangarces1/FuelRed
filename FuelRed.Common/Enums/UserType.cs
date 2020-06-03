@@ -4,6 +4,7 @@
     {
         Admin,
         StationAdmin,
-        User
+        User,
+        Pistero
     }
 }

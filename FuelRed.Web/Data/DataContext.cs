@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using FuelRed.Web.Data.Entities;
-using FuelRed.Web.Data;
+﻿using FuelRed.Web.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
-namespace Soccer.Web.Data
+namespace FuelRed.Web.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<UserEntity>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -25,10 +25,7 @@ namespace Soccer.Web.Data
             builder.Entity<StationEntity>()
                 .HasIndex(t => t.Name)
                 .IsUnique();
+
         }
-
-
-
-
     }
 }
