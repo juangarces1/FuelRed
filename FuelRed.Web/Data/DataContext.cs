@@ -13,10 +13,20 @@ namespace FuelRed.Web.Data
         public DbSet<StationEntity> Stations { get; set; }
 
         public DbSet<EmployeeEntity> Employees { get; set; }
+     
         public DbSet<ProductEntity> Products { get; set; }
+     
         public DbSet<BankEntity> Banks { get; set; }
+     
         public DbSet<TransactionEntity> Transactions { get; set; }
+      
         public DbSet<PaymentEntity> Payments { get; set; }
+
+        public DbSet<DispenserEntity> Dispensers { get; set; }
+
+        public DbSet<HoseEntity> Hoses { get; set; }
+
+     
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -24,7 +34,9 @@ namespace FuelRed.Web.Data
 
             builder.Entity<StationEntity>()
                 .HasIndex(t => t.Name)
-                .IsUnique();
+                .IsUnique();     
+
+          
 
         }
     }

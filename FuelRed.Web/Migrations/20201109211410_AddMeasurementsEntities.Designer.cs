@@ -4,14 +4,16 @@ using FuelRed.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FuelRed.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201109211410_AddMeasurementsEntities")]
+    partial class AddMeasurementsEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,6 +99,99 @@ namespace FuelRed.Web.Migrations
                     b.HasIndex("DispenserEntityId");
 
                     b.ToTable("Hoses");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Measurement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<DateTime>("HourEnd");
+
+                    b.Property<DateTime>("HourStart");
+
+                    b.Property<int?>("StationId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Measurements");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.MeasurementItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Combustible");
+
+                    b.Property<string>("Detail");
+
+                    b.Property<string>("Dispenser");
+
+                    b.Property<int?>("DispenserEntityId");
+
+                    b.Property<int>("DispenserId");
+
+                    b.Property<string>("Hose");
+
+                    b.Property<int>("HoseId");
+
+                    b.Property<int?>("MeasurementId");
+
+                    b.Property<string>("Medida1");
+
+                    b.Property<string>("Medida2");
+
+                    b.Property<string>("Medida3");
+
+                    b.Property<int>("Number");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DispenserEntityId");
+
+                    b.HasIndex("MeasurementId");
+
+                    b.ToTable("MeasurementItems");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.MeasurementItemTemp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Combustible");
+
+                    b.Property<string>("Detail");
+
+                    b.Property<string>("Dispenser");
+
+                    b.Property<int>("DispenserId");
+
+                    b.Property<string>("Hose");
+
+                    b.Property<int>("HoseId");
+
+                    b.Property<string>("Medida1");
+
+                    b.Property<string>("Medida2");
+
+                    b.Property<string>("Medida3");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MeasurementItemTemps");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.PaymentEntity", b =>
@@ -421,6 +516,28 @@ namespace FuelRed.Web.Migrations
                     b.HasOne("FuelRed.Web.Data.Entities.DispenserEntity")
                         .WithMany("Hoses")
                         .HasForeignKey("DispenserEntityId");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Measurement", b =>
+                {
+                    b.HasOne("FuelRed.Web.Data.Entities.StationEntity", "Station")
+                        .WithMany("Measurements")
+                        .HasForeignKey("StationId");
+
+                    b.HasOne("FuelRed.Web.Data.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.MeasurementItem", b =>
+                {
+                    b.HasOne("FuelRed.Web.Data.Entities.DispenserEntity")
+                        .WithMany("MedidasItems")
+                        .HasForeignKey("DispenserEntityId");
+
+                    b.HasOne("FuelRed.Web.Data.Entities.Measurement")
+                        .WithMany("MedidaItems")
+                        .HasForeignKey("MeasurementId");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.PaymentEntity", b =>

@@ -4,14 +4,16 @@ using FuelRed.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FuelRed.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201109162937_AddEntitisDispenserHose")]
+    partial class AddEntitisDispenserHose
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,7 +98,7 @@ namespace FuelRed.Web.Migrations
 
                     b.HasIndex("DispenserEntityId");
 
-                    b.ToTable("Hoses");
+                    b.ToTable("HoseEntity");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.PaymentEntity", b =>
@@ -164,10 +166,6 @@ namespace FuelRed.Web.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("LegalCertificate")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<string>("LegalName")
                         .IsRequired()
                         .HasMaxLength(100);
 
@@ -405,7 +403,7 @@ namespace FuelRed.Web.Migrations
             modelBuilder.Entity("FuelRed.Web.Data.Entities.DispenserEntity", b =>
                 {
                     b.HasOne("FuelRed.Web.Data.Entities.StationEntity")
-                        .WithMany("Dispensers")
+                        .WithMany("Dispenser")
                         .HasForeignKey("StationEntityId");
                 });
 

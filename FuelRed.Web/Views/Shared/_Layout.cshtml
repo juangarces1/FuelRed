@@ -33,16 +33,19 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Banks" asp-action="Index">Banks</a></li>
 
                     @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
                     {
-                        <li><a asp-area="" asp-controller="Stations" asp-action="Index">Stations</a></li>
+                        <li><a asp-area="" asp-controller="Payments" asp-action="Index">Payments</a></li>
+
                         <li><a asp-area="" asp-controller="Products" asp-action="Index">Products</a></li>
 
                     }
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
-                        <li><a asp-area="" asp-controller="Account" asp-action="Index">Users</a></li>                        
+                        <li><a asp-area="" asp-controller="Account" asp-action="Index">Users</a></li>                       
+                        <li><a asp-area="" asp-controller="Stations" asp-action="Index">Stations</a></li>
 
                     }
                 </ul>

@@ -7,6 +7,12 @@ namespace FuelRed.Web.Helpers
     {
         IEnumerable<SelectListItem> GetComboStations();
 
-       
+        IEnumerable<SelectListItem> GetComboBanks();
+
+        //IEnumerable<SelectListItem> GetComboDispensers();
+
+        //IEnumerable<SelectListItem> GetComboHoses(int IdDispenser);
+
+
     }
 }

@@ -19,15 +19,15 @@ namespace FuelRed.Web.Data.Entities
         public UserEntity User { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = false)]
-        [Required(ErrorMessage = "Debe Ingresar el Precio")]
+        [Required(ErrorMessage = "The field {0} is mandatory")]
         public string Amount { get; set; }
-       
+
         public BankEntity Bank { get; set; }
 
+        [Required (ErrorMessage ="The field {0} is mandatory")]
+        [Display(Name = "Document Number")]
         public string DocumentNumber { get; set; }
-
-        [Display(Name = "User Type")]
-        public UserType UserType { get; set; }
+       
 
         [Display(Name = "Currency Type")]
         public CurrencyType Currency { get; set; }

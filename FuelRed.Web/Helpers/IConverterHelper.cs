@@ -1,5 +1,8 @@
-﻿using FuelRed.Web.Data.Entities;
+﻿using FuelRed.Common.Models;
+using FuelRed.Web.Data.Entities;
 using FuelRed.Web.Models;
+using Soccer.Common.Models;
+using System.Threading.Tasks;
 
 namespace FuelRed.Web.Helpers
 {
@@ -12,6 +15,15 @@ namespace FuelRed.Web.Helpers
         ProductEntity ToProductEntity(ProductViewModel model, string path, bool isNew);
 
         ProductViewModel ToProductViewModel(ProductEntity productEntity);
+
+        PaymentViewModel ToPaymentViewModel(PaymentEntity paymentEntity);
+
+       Task<PaymentEntity> ToPaymentEntityAsync(PaymentViewModel model, string email, bool isNew);
+
+        UserResponse ToUserResponse(UserEntity user);
+
+        PaymentResponse ToPaymentResponse(PaymentEntity payment);
+
     }
 }
 

@@ -47,11 +47,13 @@ namespace FuelRed.Web
                 cfg.UseSqlServer(Configuration.GetConnectionString("FuelRedConnection"));
             });
             services.AddTransient<SeedDb>();
+            services.AddScoped<IPaymentsHelper, PaymentsHelper>();
             services.AddScoped<IProductsHelper, ProductsHelper>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
+            services.AddScoped<IDispenserHelper, DispenserHelper>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

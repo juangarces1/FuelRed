@@ -4,14 +4,16 @@ using FuelRed.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FuelRed.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201109182044_AddHoses")]
+    partial class AddHoses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -164,10 +166,6 @@ namespace FuelRed.Web.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("LegalCertificate")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<string>("LegalName")
                         .IsRequired()
                         .HasMaxLength(100);
 

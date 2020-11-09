@@ -1,4 +1,4 @@
-﻿@model FuelRed.Web.Data.Entities.StationEntity
+﻿@model FuelRed.Web.Data.Entities.DispenserEntity
 
 @{
     ViewData["Title"] = "Index";
@@ -16,61 +16,46 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LogoPath)
-        </dt>
-        <dd>
-            @if (!string.IsNullOrEmpty(Model.LogoPath))
-            {
-                <img src="@Url.Content(Model.LogoPath)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
-            }
-        </dd>
+
     </dl>
 </div>
 
 
 <p>
-    <a asp-action="AddDispenser" asp-route-id="@Model.Id" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add Dispenser</a>
-    <a asp-action="Medidas" asp-route-id="@Model.Id" class="btn btn-info"><i class="glyphicon glyphicon-plus"></i> Add Measurement</a>
+    <a asp-action="AddHose" asp-route-id="@Model.Id" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add Hose</a>
 </p>
 
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Dispensers</h3>
+                <h3 class="panel-title">Hoses</h3>
             </div>
             <div class="panel-body">
                 <table class="table table-hover table-responsive table-striped" id="MyTable">
                     <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Dispensers.FirstOrDefault().Name)
+                                @Html.DisplayNameFor(model => model.Hoses.FirstOrDefault().Type)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Dispensers.FirstOrDefault().HosesNumber)
+                                @Html.DisplayNameFor(model => model.Hoses.FirstOrDefault().Number)
                             </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Dispensers)
+                        @foreach (var item in Model.Hoses)
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
+                                    @Html.DisplayFor(modelItem => item.Type)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.HosesNumber)
+                                    @Html.DisplayFor(modelItem => item.Number)
                                 </td>
                                 <td>
-                                   <a asp-action="DetailsDispenser" asp-route-id="@item.Id" class="btn btn-info"><i class="glyphicon glyphicon-align-justify"></i></a>
+                                    <a asp-action="DetailsDispenser" asp-route-id="@item.Id" class="btn btn-info"><i class="glyphicon glyphicon-align-justify"></i></a>
                                     <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
                                 </td>
                             </tr>
@@ -100,7 +85,7 @@
             });
 
             $("#btnYesDelete").click(function () {
-                window.location.href = '/Stations/DeleteDispenser/' + item_to_delete;
+                window.location.href = '/Stations/DeleteHose/' + item_to_delete;
             });
         });
     </script>

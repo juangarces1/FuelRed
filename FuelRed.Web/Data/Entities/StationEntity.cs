@@ -25,6 +25,13 @@ namespace FuelRed.Web.Data.Entities
         [Display(Name = "Logo")]
         public string LogoPath { get; set; }
 
+        [Display(Name = "Legal name")]
+        [MaxLength(100, ErrorMessage = "The {0} field can not have more than {1} characters")]
+        [Required(ErrorMessage = "The {0} field is mandatory ")]
+        public string LegalName { get; set; }
+
+        public int DispenserNumber => Dispensers == null ? 0 : Dispensers.Count;
+
         public ICollection<ProductEntity> Products { get; set; }
 
         public ICollection<EmployeeEntity> Employees { get; set; }
@@ -32,6 +39,12 @@ namespace FuelRed.Web.Data.Entities
         public ICollection<TransactionEntity> Transactions { get; set; }
 
         public ICollection<UserEntity> Users { get; set; }
+
+        public ICollection<DispenserEntity> Dispensers { get; set; }
+
+       
+
+
     }
 
 }

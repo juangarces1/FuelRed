@@ -93,7 +93,7 @@ namespace FuelRed.Web.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            //LoginViewModel log = new LoginViewModel();
+            LoginViewModel log = new LoginViewModel();
             return View();
         }
 

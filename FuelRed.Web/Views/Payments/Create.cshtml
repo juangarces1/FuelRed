@@ -1,0 +1,51 @@
+﻿@model FuelRed.Web.Models.PaymentViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create Payment</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="PaymentStatus" />
+            <input type="hidden" asp-for="Date" />
+            <input type="hidden" asp-for="User" />
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DocumentNumber" class="control-label"></label>
+                <input asp-for="DocumentNumber" class="form-control" />
+                <span asp-validation-for="DocumentNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Currency" class="control-label"></label>
+                @Html.DropDownList("Currency",
+                 Html.GetEnumSelectList<FuelRed.Common.Enums.CurrencyType>(),
+                 "Select curremcy", new { @class = "form-control" })
+                <span asp-validation-for="Currency" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BannkId" class="control-label"></label>
+                <select asp-for="BannkId" asp-items="Model.Banks" class="form-control"></select>
+                <span asp-validation-for="BannkId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-success">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
