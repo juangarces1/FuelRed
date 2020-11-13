@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FuelRed.Web.Data;
-using FuelRed.Web.Models;
+﻿using FuelRed.Web.Data;
 using FuelRed.Web.Helpers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
 
 namespace FuelRed.Web.Controllers
 {
-   
+
     public class UsersController : Controller
     {
         private readonly DataContext _dataContext;
@@ -24,8 +17,8 @@ namespace FuelRed.Web.Controllers
             _userHelper = userHelper;
         }
 
-       
 
-       
+
+
     }
 }

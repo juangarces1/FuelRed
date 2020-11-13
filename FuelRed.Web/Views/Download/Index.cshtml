@@ -1,0 +1,167 @@
+﻿@model FuelRed.Web.Data.Entities.Download
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Station Service</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Station.Name)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Station.Name)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Station.LegalCertificate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Station.LegalCertificate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Station.LegalName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Station.LegalName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Station.LogoPath)
+                            </dt>
+                            <dd>
+                                @if (!string.IsNullOrEmpty(Model.Station.LogoPath))
+                                {
+                                    <img src="@Url.Content(Model.Station.LogoPath)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.User.FullName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.User.FullName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.User.Document)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.User.Document)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.User.PicturePath)
+                            </dt>
+                            <dd>
+                                @if (!string.IsNullOrEmpty(Model.User.PicturePath))
+                                {
+                                    <img src="@Url.Content(Model.User.PicturePath)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Truck.LicensePlate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Truck.LicensePlate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Truck.TankPlate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Truck.TankPlate)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Information</h3>
+                </div>
+                <div class="panel-body">
+                    <form asp-action="Medidas">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-row">
+                            <div class="col-md-4 form-group">
+                                <label asp-for="Date" class="control-label"></label>
+                                <input asp-for="Date" class="form-control" />
+                                <span asp-validation-for="Date" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="StartHour" class="control-label"></label>
+                                <input asp-for="StartHour" class="form-control" />
+                                <span asp-validation-for="StartHour" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="EndHour" class="control-label"></label>
+                                <input asp-for="EndHour" class="form-control" />
+                                <span asp-validation-for="EndHour" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-2 form-group">
+                                <label asp-for="Number" class="control-label"></label>
+                                <input asp-for="Number" class="form-control" />
+                                <span asp-validation-for="Number" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="Observation" class="control-label"></label>
+                                <input asp-for="Observation" class="form-control" />
+                                <span asp-validation-for="Observation" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <br />
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <a asp-action="Index" class="btn btn-success">Back to List</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<partial name="_CheckList" />
+
+<br />
+
+<partial name="_TankList" />
+

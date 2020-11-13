@@ -1,0 +1,92 @@
+﻿@model FuelRed.Web.Models.MedTempViewModel
+@{
+    ViewData["Title"] = "Add Department";
+}
+<hr />
+<div class="container">
+    <div class="row" data-aos="fade-up">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Record</h3>
+                </div>
+                <div class="panel-body">
+                    <form asp-action="AddItemTemp">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <label asp-for="DispenserId" class="control-label"></label>
+                                <select asp-for="DispenserId" asp-items="Model.Dispensers" class="form-control"></select>
+                                <span asp-validation-for="DispenserId" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="HoseId" class="control-label"></label>
+                                <select asp-for="HoseId" asp-items="Model.Hoses" class="form-control"></select>
+                                <span asp-validation-for="HoseId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-4 form-group">
+                                <label asp-for="Md1" class="control-label"></label>
+                                <input asp-for="Md1" class="form-control" />
+                                <span asp-validation-for="Md1" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="Md2" class="control-label"></label>
+                                <input asp-for="Md2" class="form-control" />
+                                <span asp-validation-for="Md2" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="Md3" class="control-label"></label>
+                                <input asp-for="Md3" class="form-control" />
+                                <span asp-validation-for="Md3" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-8 form-group">
+                                <label asp-for="Detail" class="control-label"></label>
+                                <input asp-for="Detail" class="form-control" />
+                                <span asp-validation-for="Detail" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <br />
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <a asp-action="Index" class="btn btn-success">Back to List</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#DispenserId").change(function () {
+                $("#HoseId").empty();
+                $("#HoseId").append('<option value="0">(Select a Hose...)</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetHoses")',
+                    dataType: 'json',
+                    data: { dispenserId: $("#DispenserId").val() },
+                    success: function (hoses) {
+                        debugger;
+                        $.each(hoses, function (i, hose) {
+                            $("#HoseId").append('<option value="'
+                                + hose.id + '">'
+                                + hose.number +' ' + hose.type + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve hoses.' + ex);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+}

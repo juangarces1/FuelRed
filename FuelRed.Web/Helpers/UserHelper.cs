@@ -103,6 +103,11 @@ namespace FuelRed.Web.Helpers
             await _userManager.AddToRoleAsync(user, roleName);
         }
 
+        public async Task RemoveUserFromRoleAsync(UserEntity user, string roleName)
+        {
+            await _userManager.RemoveFromRoleAsync(user, roleName);
+        }
+
         public async Task CheckRoleAsync(string roleName)
         {
             var roleExists = await _roleManager.RoleExistsAsync(roleName);

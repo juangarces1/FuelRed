@@ -9,9 +9,9 @@ namespace FuelRed.Web.Helpers
 
         IEnumerable<SelectListItem> GetComboBanks();
 
-        //IEnumerable<SelectListItem> GetComboDispensers();
+        IEnumerable<SelectListItem> GetComboDispensers();
 
-        //IEnumerable<SelectListItem> GetComboHoses(int IdDispenser);
+        IEnumerable<SelectListItem> GetComboHoses(int IdDispenser);
 
 
     }

@@ -1,0 +1,123 @@
+﻿@model FuelRed.Web.Data.Entities.Truck
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Truck</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LicensePlate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LicensePlate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TankPlate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TankPlate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TanksNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TanksNumber)
+        </dd>
+    </dl>
+</div>
+<br />
+<div>
+    <p>
+        <a asp-action="CreateTruckTank" asp-route-id="@Model.Id" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>Add Tank</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i>Edit</a>
+        <a asp-action="Index" class="btn btn-info"><i class="glyphicon glyphicon-arrow-left"></i>Go Back</a>
+    </p>
+</div>  
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Tanks</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-responsive table-striped" id="MyTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Tanks.FirstOrDefault().Number)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Tanks.FirstOrDefault().CompartmentsNumber)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @if (Model.Tanks.Count > 0) 
+                     {
+                        <tbody>
+                            @foreach (var item in Model.Tanks)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Number)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CompartmentsNumber)
+                                    </td>
+                                    <td>
+                                        <a asp-action="DetailsTank" asp-route-id="@item.Id" class="btn btn-info"><i class="glyphicon glyphicon-align-justify"></i></a>
+                                        <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="_DeleteDialog" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$('#MyTable').DataTable();
+
+            // Delete item
+            var item_to_delete;
+
+            $('.deleteItem').click((e) => {
+                item_to_delete = e.currentTarget.dataset.id;
+            });
+
+            $("#btnYesDelete").click(function () {
+                window.location.href = '/Trucks/DeleteTank/' + item_to_delete;
+            });
+        });
+    </script>
+}
+
+
+

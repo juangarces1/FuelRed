@@ -1,0 +1,112 @@
+﻿@model FuelRed.Web.Data.Entities.Download
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .row {
+            margin-left: -5px;
+            margin-right: -5px;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 5px;
+        }
+
+        /* Clearfix (clear floats) */
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ff0000;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 16px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #d3cccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="row">
+            @foreach (var item in Model.Truck.Tanks)
+            {
+                <div class="column">
+                    <table>
+                        <tr>
+                            <th>Tank</th>
+                            <th>Fuel</th>
+                            <th>Compartment</th>
+                        </tr>
+                        <tr>
+                            <td>@item.Number</td>
+                            <td>
+                                <select asp-items="Html.GetEnumSelectList<TypeFuel>()" id="@item.Number"> 
+                                    <option selected="selected" value="">Please select</option>
+                                </select>
+                            </td>
+                            <td>
+                                select
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            }
+
+
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#1").change(function () {
+                $("#HoseId").empty();
+                $("#HoseId").append('<option value="0">(Select a Hose...)</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetHosesItem")',
+                    dataType: 'json',
+                    data: { dispenserId: $("#DispenserId").val(), meaDispId: $("#IdMeaDips").val() },
+                    success: function (hoses) {
+                        debugger;
+                        $.each(hoses, function (i, hose) {
+                            $("#HoseId").append('<option value="'
+                                + hose.id + '">'
+                                + hose.number +' ' + hose.type + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve hoses.' + ex);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+}
+

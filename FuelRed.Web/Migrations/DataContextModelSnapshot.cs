@@ -36,6 +36,25 @@ namespace FuelRed.Web.Migrations
                     b.ToTable("Banks");
                 });
 
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Compartment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Capacity");
+
+                    b.Property<int>("Number");
+
+                    b.Property<int?>("TankId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TankId");
+
+                    b.ToTable("Compartments");
+                });
+
             modelBuilder.Entity("FuelRed.Web.Data.Entities.DispenserEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -51,6 +70,79 @@ namespace FuelRed.Web.Migrations
                     b.HasIndex("StationEntityId");
 
                     b.ToTable("Dispensers");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Download", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Area");
+
+                    b.Property<bool>("CisternEscape");
+
+                    b.Property<bool>("Container");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<DateTime>("EndHour");
+
+                    b.Property<bool>("Exit");
+
+                    b.Property<bool>("Extinguisher");
+
+                    b.Property<bool>("Marched");
+
+                    b.Property<int>("Number");
+
+                    b.Property<string>("Observation");
+
+                    b.Property<bool>("Recope");
+
+                    b.Property<bool>("Sample");
+
+                    b.Property<bool>("Security");
+
+                    b.Property<DateTime>("StartHour");
+
+                    b.Property<int?>("StationId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Downloads");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Driver", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Document");
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired();
+
+                    b.Property<int?>("StationId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StationId");
+
+                    b.ToTable("Drivers");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.EmployeeEntity", b =>
@@ -90,13 +182,111 @@ namespace FuelRed.Web.Migrations
 
                     b.Property<int>("Number");
 
-                    b.Property<string>("Type");
+                    b.Property<string>("Type")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
                     b.HasIndex("DispenserEntityId");
 
                     b.ToTable("Hoses");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.MeaDisp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<DateTime>("EndHour");
+
+                    b.Property<int>("Number");
+
+                    b.Property<string>("Observation");
+
+                    b.Property<int?>("SeraphinId");
+
+                    b.Property<DateTime>("StartHour");
+
+                    b.Property<int?>("StationId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SeraphinId");
+
+                    b.HasIndex("StationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MeaDisps");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.MeaItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Detail");
+
+                    b.Property<int?>("DispenserId");
+
+                    b.Property<int?>("HoseId");
+
+                    b.Property<decimal>("Md1")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Md2")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Md3")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("MeaDispId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DispenserId");
+
+                    b.HasIndex("HoseId");
+
+                    b.HasIndex("MeaDispId");
+
+                    b.ToTable("MeaItems");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.MedTemp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Detail");
+
+                    b.Property<int?>("DispenserId");
+
+                    b.Property<int?>("HoseId");
+
+                    b.Property<decimal>("Md1")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Md2")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Md3")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DispenserId");
+
+                    b.HasIndex("HoseId");
+
+                    b.ToTable("MedTemps");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.PaymentEntity", b =>
@@ -142,7 +332,8 @@ namespace FuelRed.Web.Migrations
 
                     b.Property<string>("ImagePath");
 
-                    b.Property<decimal>("Price");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("StationId");
 
@@ -151,6 +342,27 @@ namespace FuelRed.Web.Migrations
                     b.HasIndex("StationId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Seraphin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Certifacate");
+
+                    b.Property<int>("Gauge");
+
+                    b.Property<int?>("StationId");
+
+                    b.Property<int>("validity");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StationId");
+
+                    b.ToTable("Seraphin");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.StationEntity", b =>
@@ -202,11 +414,13 @@ namespace FuelRed.Web.Migrations
                         .HasMaxLength(100);
 
                     b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
                         .HasMaxLength(10);
 
                     b.Property<int?>("StationId");
 
                     b.Property<decimal>("Volumen")
+                        .HasColumnType("decimal(18,2)")
                         .HasMaxLength(10);
 
                     b.HasKey("Id");
@@ -216,6 +430,50 @@ namespace FuelRed.Web.Migrations
                     b.HasIndex("StationId");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Truck", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("LicensePlate")
+                        .IsRequired();
+
+                    b.Property<string>("Model")
+                        .IsRequired();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int?>("StationId");
+
+                    b.Property<string>("TankPlate")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StationId");
+
+                    b.ToTable("Trucks");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.TruckTank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Number");
+
+                    b.Property<int?>("TruckId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TruckId");
+
+                    b.ToTable("TruckTanks");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.UserEntity", b =>
@@ -402,11 +660,36 @@ namespace FuelRed.Web.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Compartment", b =>
+                {
+                    b.HasOne("FuelRed.Web.Data.Entities.TruckTank", "Tank")
+                        .WithMany("Compartments")
+                        .HasForeignKey("TankId");
+                });
+
             modelBuilder.Entity("FuelRed.Web.Data.Entities.DispenserEntity", b =>
                 {
                     b.HasOne("FuelRed.Web.Data.Entities.StationEntity")
                         .WithMany("Dispensers")
                         .HasForeignKey("StationEntityId");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Download", b =>
+                {
+                    b.HasOne("FuelRed.Web.Data.Entities.StationEntity", "Station")
+                        .WithMany()
+                        .HasForeignKey("StationId");
+
+                    b.HasOne("FuelRed.Web.Data.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Driver", b =>
+                {
+                    b.HasOne("FuelRed.Web.Data.Entities.StationEntity", "Station")
+                        .WithMany("Drivers")
+                        .HasForeignKey("StationId");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.EmployeeEntity", b =>
@@ -421,6 +704,47 @@ namespace FuelRed.Web.Migrations
                     b.HasOne("FuelRed.Web.Data.Entities.DispenserEntity")
                         .WithMany("Hoses")
                         .HasForeignKey("DispenserEntityId");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.MeaDisp", b =>
+                {
+                    b.HasOne("FuelRed.Web.Data.Entities.Seraphin", "Seraphin")
+                        .WithMany()
+                        .HasForeignKey("SeraphinId");
+
+                    b.HasOne("FuelRed.Web.Data.Entities.StationEntity", "Station")
+                        .WithMany()
+                        .HasForeignKey("StationId");
+
+                    b.HasOne("FuelRed.Web.Data.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.MeaItem", b =>
+                {
+                    b.HasOne("FuelRed.Web.Data.Entities.DispenserEntity", "Dispenser")
+                        .WithMany()
+                        .HasForeignKey("DispenserId");
+
+                    b.HasOne("FuelRed.Web.Data.Entities.HoseEntity", "Hose")
+                        .WithMany()
+                        .HasForeignKey("HoseId");
+
+                    b.HasOne("FuelRed.Web.Data.Entities.MeaDisp")
+                        .WithMany("MeaItems")
+                        .HasForeignKey("MeaDispId");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.MedTemp", b =>
+                {
+                    b.HasOne("FuelRed.Web.Data.Entities.DispenserEntity", "Dispenser")
+                        .WithMany()
+                        .HasForeignKey("DispenserId");
+
+                    b.HasOne("FuelRed.Web.Data.Entities.HoseEntity", "Hose")
+                        .WithMany()
+                        .HasForeignKey("HoseId");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.PaymentEntity", b =>
@@ -441,6 +765,13 @@ namespace FuelRed.Web.Migrations
                         .HasForeignKey("StationId");
                 });
 
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Seraphin", b =>
+                {
+                    b.HasOne("FuelRed.Web.Data.Entities.StationEntity", "Station")
+                        .WithMany()
+                        .HasForeignKey("StationId");
+                });
+
             modelBuilder.Entity("FuelRed.Web.Data.Entities.TransactionEntity", b =>
                 {
                     b.HasOne("FuelRed.Web.Data.Entities.EmployeeEntity", "Employee")
@@ -450,6 +781,20 @@ namespace FuelRed.Web.Migrations
                     b.HasOne("FuelRed.Web.Data.Entities.StationEntity", "Station")
                         .WithMany("Transactions")
                         .HasForeignKey("StationId");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.Truck", b =>
+                {
+                    b.HasOne("FuelRed.Web.Data.Entities.StationEntity", "Station")
+                        .WithMany("Trucks")
+                        .HasForeignKey("StationId");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.TruckTank", b =>
+                {
+                    b.HasOne("FuelRed.Web.Data.Entities.Truck", "Truck")
+                        .WithMany("Tanks")
+                        .HasForeignKey("TruckId");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.UserEntity", b =>

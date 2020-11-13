@@ -26,7 +26,8 @@ namespace FuelRed.Web.Helpers
                 LogoPath = path,
                 Name = model.Name,
                 Address = model.Address,
-                LegalCertificate = model.LegalCertificate
+                LegalCertificate = model.LegalCertificate,
+                LegalName=model.LegalName
 
             };
         }
@@ -39,7 +40,8 @@ namespace FuelRed.Web.Helpers
                 LogoPath = stationEntity.LogoPath,
                 Name = stationEntity.Name,
                 Address = stationEntity.Address,
-                LegalCertificate = stationEntity.LegalCertificate
+                LegalCertificate = stationEntity.LegalCertificate,
+                LegalName = stationEntity.LegalName
             };
         }
 

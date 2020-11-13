@@ -1,0 +1,277 @@
+﻿@model FuelRed.Web.Models.MeaDispViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<br />
+
+<h3>@ViewBag.Error</h3>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Station Service</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Station.Name)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Station.Name)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Station.LegalCertificate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Station.LegalCertificate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Station.LegalName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Station.LegalName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Station.LogoPath)
+                            </dt>
+                            <dd>
+                                @if (!string.IsNullOrEmpty(Model.Station.LogoPath))
+                                {
+                                    <img src="@Url.Content(Model.Station.LogoPath)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.User.FullName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.User.FullName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.User.Document)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.User.Document)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.User.PicturePath)
+                            </dt>
+                            <dd>
+                                @if (!string.IsNullOrEmpty(Model.User.PicturePath))
+                                {
+                                    <img src="@Url.Content(Model.User.PicturePath)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                                }
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Seraphin</h3>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Seraphin.Gauge)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Seraphin.Gauge)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Seraphin.Certifacate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Seraphin.Certifacate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Seraphin.validity)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Seraphin.validity)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Information</h3>
+                </div>
+                <div class="panel-body">
+                    <form asp-action="Medidas">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-row">
+                            <div class="col-md-4 form-group">
+                                <label asp-for="Date" class="control-label"></label>
+                                <input asp-for="Date" class="form-control" />
+                                <span asp-validation-for="Date" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="StartHour" class="control-label"></label>
+                                <input asp-for="StartHour" class="form-control" />
+                                <span asp-validation-for="StartHour" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="EndHour" class="control-label"></label>
+                                <input asp-for="EndHour" class="form-control" />
+                                <span asp-validation-for="EndHour" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-2 form-group">
+                                <label asp-for="Number" class="control-label"></label>
+                                <input asp-for="Number" class="form-control" />
+                                <span asp-validation-for="Number" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label asp-for="Observation" class="control-label"></label>
+                                <input asp-for="Observation" class="form-control" />
+                                <span asp-validation-for="Observation" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <br />
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <a asp-action="Index" class="btn btn-success">Back to List</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">                  
+                   <h3 class="panel-title">Measurements</h3>
+                   <br />
+                   <a asp-action="AddItemTemp" class="btn btn-primary">Add New</a>                 
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover table-responsive table-striped" id="MyTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Dispenser
+                                </th>
+                                <th>
+                                    Hose
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MedTemps.FirstOrDefault().Md1)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MedTemps.FirstOrDefault().Md2)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.MedTemps.FirstOrDefault().Md3)
+                                </th>
+                                <th>
+                                    Fuel Type
+                                </th>
+                                <th>
+                                    Present Water/Sediment
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @if(Model.MedTemps.Count > 0 )
+                        { 
+                            <tbody>
+                                @foreach (var item in Model.MedTemps)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Dispenser.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Hose.Number)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Md1)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Md2)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Md3)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Hose.Type)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Detail)
+                                        </td>
+                                        <td>
+                                            <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                         }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<partial name="_DeleteDialog" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$('#MyTable').DataTable();
+
+            // Delete item
+            var item_to_delete;
+
+            $('.deleteItem').click((e) => {
+                item_to_delete = e.currentTarget.dataset.id;
+            });
+
+            $("#btnYesDelete").click(function () {
+                window.location.href = '/Stations/DeleteMedItem/' + item_to_delete;
+            });
+        });
+    </script>
+}

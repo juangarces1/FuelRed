@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FuelRed.Web.Data.Entities
 {
@@ -10,6 +11,8 @@ namespace FuelRed.Web.Data.Entities
         [Required(ErrorMessage = "The {0} field is mandatory ")]
         public string Grade { get; set; }
 
+
+        [Column(TypeName = "decimal(18,2)")]
         [MinLength(1, ErrorMessage = "The Field {0} must have min {1} characters")]
         [MaxLength(10, ErrorMessage = "The {0} field can not have more than {1} characters")]
         [Required(ErrorMessage = "The {0} field is mandatory ")]
@@ -21,6 +24,7 @@ namespace FuelRed.Web.Data.Entities
         [Required(ErrorMessage = "The {0} field is mandatory ")]
         public string Dispenser { get; set; }
 
+        [Column(TypeName = "decimal(18,2)")]
         [MinLength(3, ErrorMessage = "The Field {0} must have min {1} characters")]
         [MaxLength(10, ErrorMessage = "The {0} field can not have more than {1} characters")]
         [Required(ErrorMessage = "The {0} field is mandatory ")]

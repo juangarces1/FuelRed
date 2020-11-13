@@ -55,7 +55,7 @@
                                     @Html.DisplayFor(modelItem => item.Number)
                                 </td>
                                 <td>
-                                    <a asp-action="DetailsDispenser" asp-route-id="@item.Id" class="btn btn-info"><i class="glyphicon glyphicon-align-justify"></i></a>
+                                    <a asp-action="EditHose" asp-route-id="@item.Id" class="btn btn-warning"><i class="glyphicon glyphicon-pencil"></i></a>
                                     <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
                                 </td>
                             </tr>
@@ -66,6 +66,9 @@
         </div>
     </div>
 </div>
+<p>
+    <a asp-action="Details" asp-route-id="@Model.IdStation" class="btn btn-info"><i class="glyphicon glyphicon-circle-arrow-left"></i>Go Back</a>
+</p>
 
 <partial name="_DeleteDialog" />
 

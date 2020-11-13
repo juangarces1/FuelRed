@@ -41,6 +41,8 @@ namespace FuelRed.Web.Helpers
 
         Task AddUserToRoleAsync(UserEntity user, string roleName);
 
+        Task RemoveUserFromRoleAsync(UserEntity user, string roleName);
+
         Task<bool> IsUserInRoleAsync(UserEntity user, string roleName);
 
 

@@ -94,7 +94,7 @@ namespace FuelRed.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
             LoginViewModel log = new LoginViewModel();
-            return View();
+            return View(log);
         }
 
         [HttpPost]
@@ -215,7 +215,7 @@ namespace FuelRed.Web.Controllers
                 }
 
                 UserEntity user = await _userHelper.GetUserAsync(model.Email);
-
+                string tipo = user.UserType.ToString();
                 user.Document = model.Document;
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
@@ -225,6 +225,8 @@ namespace FuelRed.Web.Controllers
                 user.Station = await _context.Stations.FindAsync(model.StationId);
                 user.UserType = model.UserType;
                 await _userHelper.UpdateUserAsync(user);
+                await _userHelper.AddUserToRoleAsync(user, model.UserType.ToString());
+                await _userHelper.RemoveUserFromRoleAsync(user, tipo);
                 return RedirectToAction("Index", "Account");
             }
 
@@ -320,6 +322,12 @@ namespace FuelRed.Web.Controllers
 
             return View(model);
         }
+
+        public IActionResult NotAuthorized()
+        {
+            return View();
+        }
+
 
 
 

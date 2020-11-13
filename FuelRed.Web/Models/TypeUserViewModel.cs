@@ -1,15 +1,12 @@
 ﻿using FuelRed.Common.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FuelRed.Web.Models
 {
-    public class TypeUserViewModel 
+    public class TypeUserViewModel
     {
         public int Id { get; set; }
 
@@ -36,7 +33,7 @@ namespace FuelRed.Web.Models
         public string PhoneNumber { get; set; }
 
 
-       
+
         public string Email { get; set; }
 
         [Display(Name = "Picture")]
@@ -52,7 +49,7 @@ namespace FuelRed.Web.Models
 
         public IEnumerable<SelectListItem> Stations { get; set; }
 
-       
+
 
         [Required]
         public UserType UserType { get; set; }

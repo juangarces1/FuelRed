@@ -1,0 +1,23 @@
+﻿@model FuelRed.Web.Data.Entities.Truck
+
+<input asp-for="IdStation" type="hidden" />
+<div class="form-group">
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="LicensePlate" class="control-label"></label>
+    <input asp-for="LicensePlate" class="form-control" />
+    <span asp-validation-for="LicensePlate" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Model" class="control-label"></label>
+    <input asp-for="Model" class="form-control" />
+    <span asp-validation-for="Model" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="TankPlate" class="control-label"></label>
+    <input asp-for="TankPlate" class="form-control" />
+    <span asp-validation-for="TankPlate" class="text-danger"></span>
+</div>

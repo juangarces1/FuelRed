@@ -1,0 +1,63 @@
+﻿@model FuelRed.Web.Data.Entities.Download
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Security checks</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover table-responsive table-striped" id="MyTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Check
+                                    </th>
+                                    <th>
+                                        Review
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input asp-for="Security" /></td>
+                                    <td>@Html.DisplayNameFor(model => model.Security) </td>
+                                <tr>
+                                    <td><input asp-for="Extinguisher" /></td>
+                                    <td> @Html.DisplayNameFor(model => model.Extinguisher) </td>
+                                </tr>
+                                <tr>
+                                    <td><input asp-for="Exit" /></td>
+                                    <td>@Html.DisplayNameFor(model => model.Exit) </td>
+                                </tr>
+                                <tr>
+                                    <td><input asp-for="Area" /></td>
+                                    <td> @Html.DisplayNameFor(model => model.Area)   </td>
+                                </tr>
+                                <tr>
+                                    <td><input asp-for="CisternEscape" /></td>
+                                    <td>@Html.DisplayNameFor(model => model.CisternEscape)</td>
+                                </tr>
+                                <tr>
+                                    <td><input asp-for="Container" /></td>
+                                    <td> @Html.DisplayNameFor(model => model.Container)</td>
+                                </tr>
+                                <tr>
+                                    <td><input asp-for="Marched" /></td>
+                                    <td> @Html.DisplayNameFor(model => model.Marched)</td>
+                                </tr>
+                                <tr>
+                                    <td><input asp-for="Recope" /></td>
+                                    <td>@Html.DisplayNameFor(model => model.Recope)</td>
+                                </tr>
+                                <tr>
+                                    <td><input asp-for="Sample" /></td>
+                                    <td>@Html.DisplayNameFor(model => model.Sample)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

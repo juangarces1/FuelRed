@@ -42,8 +42,9 @@ namespace FuelRed.Web.Data.Entities
 
         public ICollection<DispenserEntity> Dispensers { get; set; }
 
-       
+        public ICollection<Truck> Trucks { get; set; }
 
+        public ICollection<Driver> Drivers { get; set; }
 
     }
 

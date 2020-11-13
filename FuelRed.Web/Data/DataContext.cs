@@ -26,7 +26,25 @@ namespace FuelRed.Web.Data
 
         public DbSet<HoseEntity> Hoses { get; set; }
 
-     
+        public DbSet<MedTemp> MedTemps { get; set; }
+
+        public DbSet<MeaDisp> MeaDisps { get; set; }
+
+        public DbSet<MeaItem> MeaItems { get; set; }
+
+
+        public DbSet<Truck> Trucks { get; set; }
+
+        public DbSet<Compartment> Compartments { get; set; }
+
+        public DbSet<TruckTank> TruckTanks { get; set; }
+
+        public DbSet<Driver> Drivers { get; set; }
+
+        public DbSet<Download> Downloads { get; set; }
+
+
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -39,5 +57,10 @@ namespace FuelRed.Web.Data
           
 
         }
+
+
+
+
+        public DbSet<FuelRed.Web.Data.Entities.Seraphin> Seraphin { get; set; }
     }
 }

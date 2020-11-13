@@ -1,0 +1,36 @@
+﻿@model FuelRed.Web.Data.Entities.Seraphin
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Seraphin</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Gauge)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Gauge)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Certifacate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Certifacate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.validity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.validity)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
