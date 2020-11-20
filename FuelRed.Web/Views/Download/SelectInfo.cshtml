@@ -1,0 +1,37 @@
+﻿@model FuelRed.Web.Models.SelectViewModel
+<br />
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please Select a Driver and a Truck</h3>
+                </div>
+                <div class="panel-body">
+                    <form asp-action="SelectInfo">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-row">
+                            <div class="col-md-4 form-group">
+                                <label asp-for="DriverId" class="control-label"></label>
+                                <select asp-for="DriverId" asp-items="Model.Drivers" class="form-control"></select>
+                                <span asp-validation-for="DriverId" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="TruckId" class="control-label"></label>
+                                <select asp-for="TruckId" asp-items="Model.Trucks" class="form-control"></select>
+                                <span asp-validation-for="TruckId" class="text-danger"></span>
+                            </div>
+                            <div class="btn-group">
+                                <br />
+                                <input type="submit" value="Send" class="btn btn-success" />
+                                <a asp-action="Index" asp-controller="Home" class="btn btn-info">Go Back </a>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

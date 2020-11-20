@@ -11,9 +11,7 @@ namespace FuelRed.Web.Data.Entities
         public int Number { get; set; }
 
         [Required(ErrorMessage = "You must be enter a {0}")]
-        public int Capacity { get; set; }
-
-        public TruckTank Tank { get; set; }
+        public int Capacity { get; set; }    
 
         [NotMapped]
         public int IdTank { get; set; }

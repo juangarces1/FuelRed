@@ -5,7 +5,6 @@ using FuelRed.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Remotion.Linq.Parsing.Structure.IntermediateModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -202,7 +201,7 @@ namespace FuelRed.Web.Controllers
 
         public async Task<IActionResult> Medidas()
         {
-           
+
             UserEntity user = await _userHelper.GetUserAsync(User.Identity.Name);
             MeaDispViewModel measurement = new MeaDispViewModel
             {
@@ -216,7 +215,7 @@ namespace FuelRed.Web.Controllers
                 .OrderBy(m => m.Dispenser.Name)
                 .ThenBy(m => m.Hose.Number)
                 .ToList(),
-                Number=NextNumber()
+                Number = NextNumber()
 
             };
             return View(measurement);
@@ -227,7 +226,7 @@ namespace FuelRed.Web.Controllers
         {
             UserEntity user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (ModelState.IsValid != false)
-            {                
+            {
                 model.Id = 0;
                 model.MeaItems = _context.MedTemps.Include(m => m.Dispenser).Include(m => m.Hose).ToList().Select(t => new MeaItem
                 {
@@ -238,29 +237,30 @@ namespace FuelRed.Web.Controllers
                     Md1 = t.Md1,
                     Md2 = t.Md2,
                     Md3 = t.Md3
-                }).ToList();               
-                if (model.MeaItems.Count > 0) {
-                        MeaDisp meaDisp = new MeaDisp
-                        {
-                            Date = model.Date,
-                            EndHour = model.EndHour,
-                            Id = 0,
-                            MeaItems = model.MeaItems,
-                            Number = model.Number,
-                            Observation = model.Observation,
-                            StartHour = model.StartHour,
-                            User = user,
-                            Station = _context.Stations.Where(s => s.Id == user.Station.Id).FirstOrDefault(),
-                            Seraphin = _context.Seraphin.Where(s => s.Station.Id == user.Station.Id).FirstOrDefault()
-                        };
-                        _context.Add(meaDisp);
-                        List<MedTemp> aux = _context.MedTemps.ToList();
-                        foreach (MedTemp item in aux)
-                        {
-                            _context.MedTemps.Remove(item);
-                        }
-                        await _context.SaveChangesAsync();
-                        return RedirectToAction(nameof(Medidas));
+                }).ToList();
+                if (model.MeaItems.Count > 0)
+                {
+                    MeaDisp meaDisp = new MeaDisp
+                    {
+                        Date = model.Date,
+                        EndHour = model.EndHour,
+                        Id = 0,
+                        MeaItems = model.MeaItems,
+                        Number = model.Number,
+                        Observation = model.Observation,
+                        StartHour = model.StartHour,
+                        User = user,
+                        Station = _context.Stations.Where(s => s.Id == user.Station.Id).FirstOrDefault(),
+                        Seraphin = _context.Seraphin.Where(s => s.Station.Id == user.Station.Id).FirstOrDefault()
+                    };
+                    _context.Add(meaDisp);
+                    List<MedTemp> aux = _context.MedTemps.ToList();
+                    foreach (MedTemp item in aux)
+                    {
+                        _context.MedTemps.Remove(item);
+                    }
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Medidas));
                 }
                 ViewBag.Error = "You must insert a measurement to the list";
                 List<MedTemp> medTemps = new List<MedTemp>();
@@ -269,9 +269,9 @@ namespace FuelRed.Web.Controllers
                 model.Station = _context.Stations.Where(s => s.Id == user.Station.Id).FirstOrDefault();
                 model.User = user;
                 return View(model);
-            }          
-           
-            model.MedTemps = _context.MedTemps.Include(m=>m.Hose).Include(m => m.Dispenser).ToList();
+            }
+
+            model.MedTemps = _context.MedTemps.Include(m => m.Hose).Include(m => m.Dispenser).ToList();
             model.Seraphin = _context.Seraphin.Where(s => s.Station.Id == user.Station.Id).FirstOrDefault();
             model.Station = _context.Stations.Where(s => s.Id == user.Station.Id).FirstOrDefault();
             model.User = user;
@@ -317,7 +317,7 @@ namespace FuelRed.Web.Controllers
                .FirstOrDefaultAsync(d => d.Id == id);
             StationEntity station = _context.Stations.Include(s => s.Dispensers).Where(s => s.Dispensers.Contains(dispenser)).FirstOrDefault();
             dispenser.IdStation = station.Id;
-           
+
             if (dispenser == null)
             {
                 return NotFound();
@@ -483,7 +483,7 @@ namespace FuelRed.Web.Controllers
                 return NotFound();
             }
 
-           
+
             return View(hose);
         }
 
@@ -515,10 +515,10 @@ namespace FuelRed.Web.Controllers
                         hose.Type = TypeFuel.Exonerado.ToString();
                         break;
                 }
-                               
+
                 try
                 {
-                   
+
                     _context.Update(hose);
                     await _context.SaveChangesAsync();
 
@@ -563,7 +563,7 @@ namespace FuelRed.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-       
+
         public async Task<IActionResult> Create(StationViewModel stationViewModel)
         {
             if (ModelState.IsValid)
@@ -652,7 +652,7 @@ namespace FuelRed.Web.Controllers
             return View(stationViewModel);
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -697,7 +697,7 @@ namespace FuelRed.Web.Controllers
             }
 
             DispenserEntity dispenser = await _context.Dispensers
-                .Include(d=>d.Hoses)
+                .Include(d => d.Hoses)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (dispenser == null)
             {
@@ -742,7 +742,7 @@ namespace FuelRed.Web.Controllers
                 return NotFound();
             }
 
-           
+
 
             HoseEntity hose = await _context.Hoses
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -759,7 +759,7 @@ namespace FuelRed.Web.Controllers
             _context.Hoses.Remove(hose);
             await _context.SaveChangesAsync();
 
-          
+
 
             return RedirectToAction($"{nameof(DetailsDispenser)}/{disp.Id}");
         }
@@ -821,11 +821,11 @@ namespace FuelRed.Web.Controllers
                     aux.Remove(test);
                 }
             }
-
+            JsonResult x = Json(aux.OrderBy(c => c.Number));
             return Json(aux.OrderBy(h => h.Number));
         }
 
-        
+
 
         public JsonResult GetHosesItem(int dispenserId, int meaDispId)
         {
@@ -843,9 +843,9 @@ namespace FuelRed.Web.Controllers
 
             List<HoseEntity> disps = disp.MeaItems.Select(t => new HoseEntity
             {
-                Id=t.Hose.Id,
-                Number=t.Hose.Number,
-                Type=t.Hose.Type
+                Id = t.Hose.Id,
+                Number = t.Hose.Number,
+                Type = t.Hose.Type
             }).ToList();
 
 
@@ -859,24 +859,18 @@ namespace FuelRed.Web.Controllers
                 }
             }
 
+
+
             return Json(aux.OrderBy(h => h.Number));
         }
 
 
-        public JsonResult GetCompartments(int compid)
-        {
-           
-
-            
-
-            return Json(_context.Compartments.ToList());
-        }
 
 
-        public int  NextNumber()
+        public int NextNumber()
         {
             int number = 0;
-            var result = _context.MeaDisps.ToList();
+            List<MeaDisp> result = _context.MeaDisps.ToList();
             if (result.Count > 0)
             {
                 number = (from m in result

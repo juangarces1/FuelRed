@@ -1,11 +1,14 @@
-﻿
-using FuelRed.Web.Models;
+﻿using FuelRed.Web.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FuelRed.Web.Data.Entities
 {
-    public class ItemTank
+    public class ItemTankTemp
     {
         public int Id { get; set; }
 
@@ -13,15 +16,12 @@ namespace FuelRed.Web.Data.Entities
 
         public string Fuel { get; set; }
 
-      
+       
         public TypeFuel TypeFuel { get; set; }
 
         public Compartment Compartment { get; set; }
 
-        [NotMapped]
-        public  int IdDownload { get; set; }
-
-        [Display(Name ="Sample with sediment?")]
+        [Display(Name = "Sample with sediment?")]
         public bool Sediments { get; set; }
 
         [Display(Name = "Sample with diferent color?")]
@@ -30,6 +30,6 @@ namespace FuelRed.Web.Data.Entities
         [Display(Name = "Sample with Water?")]
         public bool Water { get; set; }
 
-
+        public int TruckId { get; set; }
     }
 }

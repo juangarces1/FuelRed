@@ -1,112 +1,184 @@
-﻿@model FuelRed.Web.Data.Entities.Download
-
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        .row {
-            margin-left: -5px;
-            margin-right: -5px;
-        }
-
-        .column {
-            float: left;
-            width: 50%;
-            padding: 5px;
-        }
-
-        /* Clearfix (clear floats) */
-        .row::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
-
-        table {
-            border-collapse: collapse;
-            border-spacing: 0;
-            width: 100%;
-            border: 1px solid #ff0000;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 16px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #d3cccc;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-
-        <div class="row">
-            @foreach (var item in Model.Truck.Tanks)
-            {
-                <div class="column">
-                    <table>
-                        <tr>
-                            <th>Tank</th>
-                            <th>Fuel</th>
-                            <th>Compartment</th>
-                        </tr>
-                        <tr>
-                            <td>@item.Number</td>
-                            <td>
-                                <select asp-items="Html.GetEnumSelectList<TypeFuel>()" id="@item.Number"> 
-                                    <option selected="selected" value="">Please select</option>
-                                </select>
-                            </td>
-                            <td>
-                                select
-                            </td>
-                        </tr>
-
-                    </table>
-                </div>
-            }
+﻿@model FuelRed.Web.Models.DownloadviewModel
 
 
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Tanks</h3>
+                <br />
+                <a asp-action="AddItemTemp" asp-route-DriverId="@Model.DriverId" asp-route-TruckId="@Model.TruckId" class="btn btn-primary">Add New</a>
+            </div>
+            <div class="panel-body">
+                @if (Model.ItemTankTemps.Count > 0)
+                {
+
+                    @foreach (var item in Model.ItemTankTemps.OrderBy(i => i.Tank.Number))
+                    {
+                        <div class="col-lg-3">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Tank</th>
+                                    <th>Fuel</th>
+                                    <th>Compartment</th>
+                                    <th></th>
+
+                                </tr>
+                                <tr>
+                                    <td>@item.Tank.Number</td>
+                                    <td>@item.Fuel</td>
+                                    <td>
+                                        @item.Compartment.Capacity
+                                    </td>
+                                    <td>
+                                        <button data-id="@item.Id"  class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    }
+                }
+            </div>
         </div>
     </div>
+</div>
 
-</body>
-</html>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Fuels Samples Verification</h3>
+            </div>
+            <div class="panel-body">
+                @if (Model.ItemTankTemps.Count > 0)
+                {
 
+                    @foreach (var item in Model.ItemTankTemps.OrderBy(i => i.Tank.Number))
+                    {
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#1").change(function () {
-                $("#HoseId").empty();
-                $("#HoseId").append('<option value="0">(Select a Hose...)</option>');
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("GetHosesItem")',
-                    dataType: 'json',
-                    data: { dispenserId: $("#DispenserId").val(), meaDispId: $("#IdMeaDips").val() },
-                    success: function (hoses) {
-                        debugger;
-                        $.each(hoses, function (i, hose) {
-                            $("#HoseId").append('<option value="'
-                                + hose.id + '">'
-                                + hose.number +' ' + hose.type + '</option>');
-                        });
-                    },
-                    error: function (ex) {
-                        alert('Failed to retrieve hoses.' + ex);
+                        <div class="col-lg-3">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>@item.TypeFuel</th>
+                                    <th>Tank # @item.Tank.Number</th>
+                                </tr>
+                                <tr>
+                                    <th>Check</th>
+                                    <th>Review</th>
+                                </tr>
+                                <tr>
+                                    <td> @Html.DisplayNameFor(model => item.Sediments)</td>
+                                    <td>  @Html.DisplayFor(model => item.Sediments)</td>
+                                </tr>
+                                <tr>
+                                    <td> @Html.DisplayNameFor(model => item.Color)</td>
+                                    <td>  @Html.DisplayFor(model => item.Color)</td>
+                                </tr>
+                                <tr>
+                                    <td> @Html.DisplayNameFor(model => item.Water)</td>
+                                    <td>  @Html.DisplayFor(model => item.Water)</td>
+                                </tr>
+                            </table>
+                        </div>
+
                     }
-                });
-                return false;
-            })
-        });
-    </script>
-}
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        
+            <div class="panel panel-default">
+
+
+                <div class="panel-heading">
+                    <h3 class="panel-title">Storage Tanks Measurement</h3>
+                    <br />
+                    <a asp-action="AddUnitTemp" asp-route-DriverId="@Model.DriverId" asp-route-TruckId="@Model.TruckId" class="btn btn-primary">Add New</a>
+                </div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <colgroup itemscope span="3"></colgroup>
+                            <colgroup span="3"></colgroup>
+                            <colgroup itemscope span="2"></colgroup>
+                            <colgroup span="2"></colgroup>
+                            <colgroup itemscope span="5"></colgroup>
+
+                            <thead>
+                                <tr>
+                                    <th scope="col" colspan="3">Start Measurement</th>
+                                    <th colspan="3">Final Measurement</th>
+                                    <th colspan="2" scope="col">Difference</th>
+                                    <th colspan="2">Purchase</th>
+                                    <th colspan="5" scope="col">Sotck Differences</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <th scope="col">Fuel</th>
+                                    <th>M.Pulg/Cm</th>
+                                    <th scope="col">Lts</th>
+                                    <th>Fuel</th>
+                                    <th scope="col">M.Pulg/Cm</th>
+                                    <th>Lts</th>
+                                    <th scope="col">Fuel</th>
+                                    <th>Lts</th>
+                                    <th scope="col">Fuel</th>
+                                    <th>Lts</th>
+                                    <th scope="col">Fuel</th>
+                                    <th>Stock Lts</th>
+                                    <th scope="col">Purchase Lts</th>
+                                    <th>Difference</th>
+                                    <th></th>
+
+                                </tr>
+                                @if (Model.UnitTemps.Count > 0)
+                                {
+                                    @foreach (var item in Model.UnitTemps.OrderBy(i => i.TypeFuel))
+                                    {
+                                        <tr>
+                                            <td scope="col">@item.TypeFuel</td>
+                                            <td>@item.StartPulg</td>
+                                            <td scope="col">@item.StartLts</td>
+                                            <td>@item.TypeFuel</td>
+                                            <td scope="col">@item.EndPulg</td>
+                                            <td>@item.EndLts</td>
+                                            <td scope="col">@item.TypeFuel</td>
+                                            <td>@item.DifferenceLts</td>
+                                            <td scope="col">@item.TypeFuel</td>
+                                            <td>@item.Buy</td>
+                                            <td scope="col">@item.TypeFuel</td>
+                                            <td>@item.DifferenceLts</td>
+                                            <td scope="col">@item.Buy</td>
+                                            <td>@item.DifferenceTotal</td>
+                                            <td>
+                                                <button data-id="@item.Id" class="btn btn-danger deleteUnit" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
+
+                                            </td>
+                                        </tr>
+
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        
+    </div>
+</div>
+
 

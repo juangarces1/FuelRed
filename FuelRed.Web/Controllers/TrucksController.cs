@@ -88,10 +88,20 @@ namespace FuelRed.Web.Controllers
             if (ModelState.IsValid)
             {
                 int var = tank.IdTruck;
-                tank.Truck = _context.Trucks.Find(tank.IdTruck);
                 tank.Id = 0;
+                Truck truc = await _context.Trucks
+                            .Include(t =>t.Tanks)
+                            .FirstOrDefaultAsync(t => t.Id == tank.IdTruck);
+                TruckTank aux = new TruckTank
+                {
+                    Compartments=tank.Compartments,
+                    Id=0,
+                    Number=tank.Number
+                };
+                truc.Tanks.Add(aux);
+               
                     
-                _context.Add(tank);
+                _context.Trucks.Update(truc);
                 await _context.SaveChangesAsync();
                 return RedirectToAction($"{nameof(Details)}/{var}");
             }
@@ -115,11 +125,14 @@ namespace FuelRed.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                int var = comp.IdTank;
-                comp.Tank = _context.TruckTanks.Find(var);
+                int var = comp.IdTank;             
                 comp.Id = 0;
+                TruckTank tank = await _context.TruckTanks
+                    .Include(t => t.Compartments)
+                    .FirstOrDefaultAsync(t => t.Id == comp.IdTank);
 
-                _context.Add(comp);
+                tank.Compartments.Add(comp);
+                _context.TruckTanks.Update(tank);
                 await _context.SaveChangesAsync();
                 return RedirectToAction($"{nameof(DetailsTank)}/{var}");
             }
@@ -253,18 +266,22 @@ namespace FuelRed.Web.Controllers
                 return NotFound();
             }
 
-            var tank = await _context.TruckTanks
-                .Include(t => t.Truck)
+            var tank = await _context.TruckTanks               
                 .Include(t => t.Compartments)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+            var truc = await _context.Trucks
+                .Include(t => t.Tanks)
+                .Where(t => t.Tanks.Contains(tank))
+                .FirstOrDefaultAsync();
             if (tank == null)
             {
                 return NotFound();
             }
-            int var = tank.Truck.Id;
+           
             _context.TruckTanks.Remove(tank);
             await _context.SaveChangesAsync();
-            return RedirectToAction($"{nameof(Details)}/{var}");
+            return RedirectToAction($"{nameof(Details)}/{truc.Id}");
         }
 
 

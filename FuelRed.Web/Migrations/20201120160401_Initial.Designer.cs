@@ -4,14 +4,16 @@ using FuelRed.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FuelRed.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201120160401_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,8 +252,6 @@ namespace FuelRed.Web.Migrations
                     b.Property<bool>("Sediments");
 
                     b.Property<int?>("TankId");
-
-                    b.Property<int>("TruckId");
 
                     b.Property<int>("TypeFuel");
 
@@ -558,6 +558,9 @@ namespace FuelRed.Web.Migrations
 
                     b.Property<int>("Buy");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<int>("EndLts");
 
                     b.Property<int>("EndPulg");
@@ -571,31 +574,8 @@ namespace FuelRed.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Units");
-                });
 
-            modelBuilder.Entity("FuelRed.Web.Data.Entities.UnitTemp", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Buy");
-
-                    b.Property<int>("EndLts");
-
-                    b.Property<int>("EndPulg");
-
-                    b.Property<string>("Fuel");
-
-                    b.Property<int>("StartLts");
-
-                    b.Property<int>("StartPulg");
-
-                    b.Property<int>("TypeFuel");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UnitTemps");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Unit");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.UserEntity", b =>
@@ -780,6 +760,17 @@ namespace FuelRed.Web.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("FuelRed.Web.Data.Entities.UnitTemp", b =>
+                {
+                    b.HasBaseType("FuelRed.Web.Data.Entities.Unit");
+
+                    b.Property<string>("Fuel");
+
+                    b.ToTable("UnitTemp");
+
+                    b.HasDiscriminator().HasValue("UnitTemp");
                 });
 
             modelBuilder.Entity("FuelRed.Web.Data.Entities.Compartment", b =>

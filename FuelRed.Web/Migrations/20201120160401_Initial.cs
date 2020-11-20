@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FuelRed.Web.Migrations
 {
-    public partial class Inicio : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,6 +51,26 @@ namespace FuelRed.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Units",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    TypeFuel = table.Column<int>(nullable: false),
+                    StartLts = table.Column<int>(nullable: false),
+                    EndLts = table.Column<int>(nullable: false),
+                    StartPulg = table.Column<int>(nullable: false),
+                    EndPulg = table.Column<int>(nullable: false),
+                    Buy = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Fuel = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Units", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -331,46 +351,6 @@ namespace FuelRed.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Downloads",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    StationId = table.Column<int>(nullable: true),
-                    UserId = table.Column<string>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    StartHour = table.Column<DateTime>(nullable: false),
-                    EndHour = table.Column<DateTime>(nullable: false),
-                    Number = table.Column<int>(nullable: false),
-                    Observation = table.Column<string>(nullable: true),
-                    Security = table.Column<bool>(nullable: false),
-                    Extinguisher = table.Column<bool>(nullable: false),
-                    Exit = table.Column<bool>(nullable: false),
-                    Area = table.Column<bool>(nullable: false),
-                    CisternEscape = table.Column<bool>(nullable: false),
-                    Container = table.Column<bool>(nullable: false),
-                    Marched = table.Column<bool>(nullable: false),
-                    Recope = table.Column<bool>(nullable: false),
-                    Sample = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Downloads", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Downloads_Stations_StationId",
-                        column: x => x.StationId,
-                        principalTable: "Stations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Downloads_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Payments",
                 columns: table => new
                 {
@@ -491,6 +471,61 @@ namespace FuelRed.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Downloads",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    StationId = table.Column<int>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    TruckId = table.Column<int>(nullable: true),
+                    DriverId = table.Column<int>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    StartHour = table.Column<DateTime>(nullable: false),
+                    EndHour = table.Column<DateTime>(nullable: false),
+                    Number = table.Column<int>(nullable: false),
+                    Observation = table.Column<string>(nullable: true),
+                    Security = table.Column<bool>(nullable: false),
+                    Extinguisher = table.Column<bool>(nullable: false),
+                    Exit = table.Column<bool>(nullable: false),
+                    ground = table.Column<bool>(nullable: false),
+                    Area = table.Column<bool>(nullable: false),
+                    CisternEscape = table.Column<bool>(nullable: false),
+                    Container = table.Column<bool>(nullable: false),
+                    Marched = table.Column<bool>(nullable: false),
+                    Recope = table.Column<bool>(nullable: false),
+                    Sample = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Downloads", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Downloads_Drivers_DriverId",
+                        column: x => x.DriverId,
+                        principalTable: "Drivers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Downloads_Stations_StationId",
+                        column: x => x.StationId,
+                        principalTable: "Stations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Downloads_Trucks_TruckId",
+                        column: x => x.TruckId,
+                        principalTable: "Trucks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Downloads_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TruckTanks",
                 columns: table => new
                 {
@@ -585,13 +620,82 @@ namespace FuelRed.Web.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Number = table.Column<int>(nullable: false),
                     Capacity = table.Column<int>(nullable: false),
-                    TankId = table.Column<int>(nullable: true)
+                    TruckTankId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Compartments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Compartments_TruckTanks_TankId",
+                        name: "FK_Compartments_TruckTanks_TruckTankId",
+                        column: x => x.TruckTankId,
+                        principalTable: "TruckTanks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemTanks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    TankId = table.Column<int>(nullable: true),
+                    Fuel = table.Column<string>(nullable: true),
+                    TypeFuel = table.Column<int>(nullable: false),
+                    CompartmentId = table.Column<int>(nullable: true),
+                    Sediments = table.Column<bool>(nullable: false),
+                    Color = table.Column<bool>(nullable: false),
+                    Water = table.Column<bool>(nullable: false),
+                    DownloadId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemTanks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ItemTanks_Compartments_CompartmentId",
+                        column: x => x.CompartmentId,
+                        principalTable: "Compartments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ItemTanks_Downloads_DownloadId",
+                        column: x => x.DownloadId,
+                        principalTable: "Downloads",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ItemTanks_TruckTanks_TankId",
+                        column: x => x.TankId,
+                        principalTable: "TruckTanks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemTankTemps",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    TankId = table.Column<int>(nullable: true),
+                    Fuel = table.Column<string>(nullable: true),
+                    TypeFuel = table.Column<int>(nullable: false),
+                    CompartmentId = table.Column<int>(nullable: true),
+                    Sediments = table.Column<bool>(nullable: false),
+                    Color = table.Column<bool>(nullable: false),
+                    Water = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemTankTemps", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ItemTankTemps_Compartments_CompartmentId",
+                        column: x => x.CompartmentId,
+                        principalTable: "Compartments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ItemTankTemps_TruckTanks_TankId",
                         column: x => x.TankId,
                         principalTable: "TruckTanks",
                         principalColumn: "Id",
@@ -643,9 +747,9 @@ namespace FuelRed.Web.Migrations
                 column: "StationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Compartments_TankId",
+                name: "IX_Compartments_TruckTankId",
                 table: "Compartments",
-                column: "TankId");
+                column: "TruckTankId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dispensers_StationEntityId",
@@ -653,9 +757,19 @@ namespace FuelRed.Web.Migrations
                 column: "StationEntityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Downloads_DriverId",
+                table: "Downloads",
+                column: "DriverId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Downloads_StationId",
                 table: "Downloads",
                 column: "StationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Downloads_TruckId",
+                table: "Downloads",
+                column: "TruckId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Downloads_UserId",
@@ -676,6 +790,31 @@ namespace FuelRed.Web.Migrations
                 name: "IX_Hoses_DispenserEntityId",
                 table: "Hoses",
                 column: "DispenserEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemTanks_CompartmentId",
+                table: "ItemTanks",
+                column: "CompartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemTanks_DownloadId",
+                table: "ItemTanks",
+                column: "DownloadId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemTanks_TankId",
+                table: "ItemTanks",
+                column: "TankId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemTankTemps_CompartmentId",
+                table: "ItemTankTemps",
+                column: "CompartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemTankTemps_TankId",
+                table: "ItemTankTemps",
+                column: "TankId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MeaDisps_SeraphinId",
@@ -782,13 +921,10 @@ namespace FuelRed.Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Compartments");
+                name: "ItemTanks");
 
             migrationBuilder.DropTable(
-                name: "Downloads");
-
-            migrationBuilder.DropTable(
-                name: "Drivers");
+                name: "ItemTankTemps");
 
             migrationBuilder.DropTable(
                 name: "MeaItems");
@@ -806,10 +942,16 @@ namespace FuelRed.Web.Migrations
                 name: "Transactions");
 
             migrationBuilder.DropTable(
+                name: "Units");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "TruckTanks");
+                name: "Downloads");
+
+            migrationBuilder.DropTable(
+                name: "Compartments");
 
             migrationBuilder.DropTable(
                 name: "MeaDisps");
@@ -824,7 +966,10 @@ namespace FuelRed.Web.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Trucks");
+                name: "Drivers");
+
+            migrationBuilder.DropTable(
+                name: "TruckTanks");
 
             migrationBuilder.DropTable(
                 name: "Seraphin");
@@ -834,6 +979,9 @@ namespace FuelRed.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "Dispensers");
+
+            migrationBuilder.DropTable(
+                name: "Trucks");
 
             migrationBuilder.DropTable(
                 name: "Stations");

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using FuelRed.Web.Data.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
 namespace FuelRed.Web.Helpers
@@ -13,6 +14,14 @@ namespace FuelRed.Web.Helpers
 
         IEnumerable<SelectListItem> GetComboHoses(int IdDispenser);
 
+        IEnumerable<SelectListItem> GetComboComparments(int idtank);
 
+        IEnumerable<SelectListItem> GetComboTanks(int Idtruck);
+
+        IEnumerable<SelectListItem> GetDriverStation(StationEntity station);
+
+        IEnumerable<SelectListItem> GetTrucksStation(StationEntity station);
+
+        IEnumerable<SelectListItem> GetComboTypesFuel();
     }
 }

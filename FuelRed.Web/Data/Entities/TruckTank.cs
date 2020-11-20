@@ -15,8 +15,7 @@ namespace FuelRed.Web.Data.Entities
 
         [Display(Name ="Compartments")]
         public int CompartmentsNumber => Compartments == null ? 0 : Compartments.Count;
-
-        public Truck Truck { get; set; }
+      
 
         [NotMapped]
         public int IdTruck { get; set; }

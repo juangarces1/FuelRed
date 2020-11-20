@@ -27,5 +27,7 @@ namespace FuelRed.Web.Data.Entities
 
         [NotMapped]
         public int IdStation { get; set; }
+
+        public string FullName => $"{Name} {LastName}";
     }
 }

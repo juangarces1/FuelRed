@@ -43,6 +43,13 @@ namespace FuelRed.Web.Data
 
         public DbSet<Download> Downloads { get; set; }
 
+        public DbSet<ItemTank> ItemTanks { get; set; }
+
+        public DbSet<ItemTankTemp> ItemTankTemps { get; set; }
+
+        public DbSet<Unit> Units { get; set; }
+
+        public DbSet<UnitTemp> UnitTemps { get; set; }
 
 
 

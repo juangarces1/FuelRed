@@ -1,0 +1,103 @@
+﻿@model FuelRed.Web.Models.UnitTempViewModel
+@{   
+  ViewData["Title"] = "Add UnitTemp";
+}
+<hr />
+<div class="container">
+    <div class="row" data-aos="fade-up">
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Record</h3>
+                </div>
+                <div class="panel-body">
+                    <form asp-action="AddUnitTemp">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="DriverId" type="hidden" />
+                        <input asp-for="TruckId" type="hidden" />
+                        <div class="form-row col-lg-12">
+                            <div class="col-md-4 form-group">
+                                <label asp-for="Fuel" class="control-label"></label>
+                                <select asp-for="Fuel" asp-items="Html.GetEnumSelectList<TypeFuel>()" class="form-control">
+                                    <option selected="selected" value="">Please select</option>
+                                </select>
+                                <span asp-validation-for="Fuel" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="StartLts" class="control-label"></label>
+                                <input asp-for="StartLts" class="form-control" />
+                                <span asp-validation-for="StartLts" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="StartPulg" class="control-label"></label>
+                                <input asp-for="StartPulg" class="form-control" />
+                                <span asp-validation-for="StartPulg" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row col-lg-12">
+
+                            <div class="col-md-4 form-group">
+                                <label asp-for="EndLts" class="control-label"></label>
+                                <input asp-for="EndLts" class="form-control" />
+                                <span asp-validation-for="EndLts" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="EndPulg" class="control-label"></label>
+                                <input asp-for="EndPulg" class="form-control" />
+                                <span asp-validation-for="EndPulg" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="Buy" class="control-label"></label>
+                                <input asp-for="Buy" class="form-control" />
+                                <span asp-validation-for="Buy" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="btn-group">
+                                <br />
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <a asp-action="Index" asp-route-DriverId="@Model.DriverId" asp-route-TruckId="@Model.TruckId" class="btn btn-success">Back to List</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#IdTank").change(function () {
+                $("#IdCompartment").empty();
+                $("#IdCompartment").append('<option value="0">(Select a Compartment...)</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetCompartments")',
+                    dataType: 'json',
+                    data: { tankid: $("#IdTank").val() },
+                    success: function (compartments) {
+                        debugger;
+                        $.each(compartments, function (i, compartment) {
+                            $("#IdCompartment").append('<option value="'
+                                + compartment.id + '">'
+                                + compartment.capacity + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve compartments.' + ex.responseJSON);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+}

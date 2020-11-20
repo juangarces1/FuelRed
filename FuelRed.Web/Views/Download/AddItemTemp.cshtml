@@ -1,0 +1,133 @@
+﻿@model FuelRed.Web.Models.ItemTankViewModel
+@{
+    ViewData["Title"] = "Add Department";
+}
+<hr />
+<div class="container">
+    <div class="row" data-aos="fade-up">
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Record</h3>
+                </div>
+                <div class="panel-body">
+                    <form asp-action="AddItemTemp">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="DriverId" type="hidden" />
+                        <input asp-for="TruckId" type="hidden" />
+                        <div class="form-row">
+                            <div class="col-md-4 form-group">
+                                <label asp-for="IdTank" class="control-label"></label>
+                                <select asp-for="IdTank" asp-items="Model.Tanks" class="form-control"></select>
+                                <span asp-validation-for="IdTank" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="type" class="control-label"></label>
+                                <select asp-for="type" asp-items="Model.Tipes" class="form-control"></select>
+                                <span asp-validation-for="type" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label asp-for="IdCompartment" class="control-label"></label>
+                                <select asp-for="IdCompartment" asp-items="Model.Compartments" class="form-control"></select>
+                                <span asp-validation-for="IdCompartment" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-row">
+                            <div class="col-md-8">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Fuels Sample Verification</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-hover table-responsive table-striped" id="MyTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Check
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input asp-for="Sediments" /> @Html.DisplayNameFor(model => model.Sediments)
+                                                            </label>
+                                                        </div>
+
+                                                    </td>
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input asp-for="Color" /> @Html.DisplayNameFor(model => model.Color)
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input asp-for="Water" /> @Html.DisplayNameFor(model => model.Water)
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-8 form-group">
+                                <br />
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <a asp-action="Index" asp-route-DriverId="@Model.DriverId" asp-route-TruckId="@Model.TruckId" class="btn btn-success">Back to List</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#IdTank").change(function () {
+                $("#IdCompartment").empty();
+                $("#IdCompartment").append('<option value="0">(Select a Compartment...)</option>');
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetCompartments")',
+                    dataType: 'json',
+                    data: { tankid: $("#IdTank").val() },
+                    success: function (compartments) {
+                        debugger;
+                        $.each(compartments, function (i, compartment) {
+                            $("#IdCompartment").append('<option value="'
+                                + compartment.id + '">'
+                                + compartment.capacity + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve compartments.' + ex.responseJSON);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+}

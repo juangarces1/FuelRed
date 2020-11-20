@@ -91,6 +91,14 @@ namespace FuelRed.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                     name: "twoids",         
+                     template: "{controller}/{DriverId}/{action}/{TruckId}");
+
+                routes.MapRoute(
+                    name: "tresids",
+                    template: "{controller}/{action}/{DriverId}/{TruckId}/{id}");
             });
         }
     }

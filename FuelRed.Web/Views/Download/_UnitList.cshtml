@@ -1,0 +1,95 @@
+﻿@model FuelRed.Web.Models.DownloadviewModel
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Start Measurement</h3>
+                        <br />
+                        <a asp-action="AddUnitTemp" class="btn btn-primary">Add New</a>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <colgroup itemscope span="3"></colgroup>
+                                <colgroup span="3"></colgroup>
+                                <colgroup itemscope span="2"></colgroup>
+                                <colgroup span="2"></colgroup>
+                                <colgroup itemscope span="5"></colgroup>
+
+                                <thead>
+                                    <tr>
+                                        <th scope="col" colspan="3">Start Measurement</th>
+                                        <th colspan="3">Final Measurement</th>
+                                        <th colspan="2" scope="col">Difference</th>
+                                        <th colspan="2">Purchase</th>
+                                        <th colspan="5" scope="col">Sotck Differences</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <th scope="col">Fuel</th>
+                                        <th>M.Pulg/Cm</th>
+                                        <th scope="col">Lts</th>
+                                        <th>Fuel</th>
+                                        <th scope="col">M.Pulg/Cm</th>
+                                        <th>Lts</th>
+                                        <th scope="col">Fuel</th>
+                                        <th>Lts</th>
+                                        <th scope="col">Fuel</th>
+                                        <th>Lts</th>
+                                        <th scope="col">Fuel</th>
+                                        <th>Stock Lts</th>
+                                        <th scope="col">Purchase Lts</th>
+                                        <th>Difference</th>
+                                        <th></th>
+
+                                    </tr>
+                                    @if (Model.ItemTankTemps.Count > 0)
+                                    {
+                                        @foreach (var item in Model.UnitTemps.OrderBy(i => i.TypeFuel))
+                                        {
+                                            <tr>
+                                                <td scope="col">@item.TypeFuel</td>
+                                                <td>@item.StartPulg</td>
+                                                <td scope="col">@item.StartLts</td>
+                                                <td>@item.TypeFuel</td>
+                                                <td scope="col">@item.EndPulg</td>
+                                                <td>@item.EndLts</td>
+                                                <td scope="col">@item.TypeFuel</td>
+                                                <td>@item.DifferenceLts</td>
+                                                <td scope="col">@item.TypeFuel</td>
+                                                <td>@item.Buy</td>
+                                                <td scope="col">@item.TypeFuel</td>
+                                                <td>@item.DifferenceLts</td>
+                                                <td scope="col">@item.Buy</td>
+                                                <td>@item.DifferenceTotal</td>
+                                                <td>
+                                                    <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog"><i class="glyphicon glyphicon-trash"></i></button>
+
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+

@@ -112,8 +112,9 @@
                             <a asp-area="" asp-controller="Products" asp-action="Index">Products</a>
                             <a asp-area="" asp-controller="Trucks" asp-action="Index">Trucks</a>
                             <a asp-area="" asp-controller="Drivers" asp-action="Index">Drivers</a>
-                            <a asp-area="" asp-controller="Download" asp-action="Index">Downloads</a>
+                            <a asp-area="" asp-controller="Download" asp-action="SelectInfo">Downloads</a>
                         </div>
+
                     </div>
                     @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
                     {
